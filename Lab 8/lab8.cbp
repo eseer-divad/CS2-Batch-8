@@ -32,7 +32,12 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
-		<Unit filename="main.cpp" />
+		<Unit filename="IntArray.cpp" />
+		<Unit filename="IntArray.h" />
+		<Unit filename="answers.txt" />
+		<Unit filename="lab8.cbp" />
+		<Unit filename="lab8.layout" />
+		<Unit filename="mainIntArray.cpp" />
 		<Extensions />
 	</Project>
 </CodeBlocks_project_file>

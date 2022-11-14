@@ -5,7 +5,8 @@ namespace ComputerScience
 {
 	class IntArray
 	{
-	private:
+    public:a
+	//private:
 		int length; //hold the array size
 		struct ListNode
 		{
