@@ -13,6 +13,10 @@
 void unpackCharacters(char[], unsigned);
 void displayBits(unsigned);
 
+using std::cout;
+using std::endl;
+using std::setw;
+
 int main() {
    char characters[4];
    unsigned packed{1633903975}; // a, c, e, g
@@ -35,13 +39,29 @@ int main() {
 }
 
 // take apart the characters
-void unpackCharacters(char characters[], unsigned pack)
-{
+void unpackCharacters(char characters[], unsigned packed) {
+        // set const "mask" variables
+        const unsigned MASK1 = 4278190080;
+        const unsigned MASK2 = 16711680;
+        const unsigned MASK3 = 65280;
+        const unsigned MASK4 = 255;
 
+        // set characters array
+        characters[0] = (MASK1&packed) >> 24;
+        characters[1] = (MASK2&packed) >> 16;
+        characters[2] = (MASK3&packed) >> 8;
+        characters[3] = (MASK4&packed);
 }
 
-// display the bits of value
-void displayBits(unsigned value)
-{
-
+// display the bits of packed
+void displayBits(unsigned packed) {
+        // Set the sizeof, shift, width. Then display.
+        const int MAX = sizeof(unsigned)*8-1;
+        const unsigned MASK = 1 << MAX;
+        cout << setw(5) << packed << " = ";
+        for(unsigned i=1;i<=MAX + 1;i++){
+                cout << (packed&MASK ? '1':'0');
+                packed <<= 1;
+        }
+        cout << endl;
 }
