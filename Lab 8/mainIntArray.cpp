@@ -125,7 +125,7 @@ int main()
     fill(largeArray.begin(), largeArray.begin()+5, -3);
     IntArray::iterator position97, positionOfa;
     position97 = find(largeArray.begin(),largeArray.end(), 97);
-    positionOfa = search(largeArray.begin(),largeArray.end(),a.begin(),a.ednn());
+    positionOfa = search(largeArray.begin(),largeArray.end(),a.begin(),a.end());
     cout << endl << "test using algorith fill, find, search" << endl;
     cout << "values before value 97: ";
     for(IntArray::iterator it = largeArray.begin(); it != position97; ++it)

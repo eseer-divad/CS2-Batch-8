@@ -1,0 +1,13 @@
+# depslib dependency file v1.0
+1668416856 source:c:\users\davidreese\onedrive - the university of akron\documents\github\cs2-batch-8\lab 8\mainintarray.cpp
+	<iostream>
+	<algorithm>
+	"IntArray.h"
+
+1668417227 c:\users\davidreese\onedrive - the university of akron\documents\github\cs2-batch-8\lab 8\intarray.h
+	<iostream>
+
+1668417353 source:c:\users\davidreese\onedrive - the university of akron\documents\github\cs2-batch-8\lab 8\intarray.cpp
+	"IntArray.h"
+	<iostream>
+

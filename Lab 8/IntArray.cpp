@@ -41,7 +41,7 @@ namespace ComputerScience
 
         copyContent(r);
     }
-
+/*
     IntArray& IntArray::operator=(const IntArray& r)
     {
         if(this == &r)  //this is the pointer to itself
@@ -55,62 +55,104 @@ namespace ComputerScience
         copyContent(r); //copy all
         return *this; //return the reference of the object
     }
-
+*/
     //copy the content from another object. Internal use
     void IntArray::copyContent(const IntArray& r)
     {
-        //copy the content from another object
-
         //handle array
-        if(r.length == 0)
-        {
-            //r is empty array
-            length = 0;
-            myArray = nullptr;
-        }
-        else
-        {
-            //only allocate memory and copy array when r.length is not 0
-            length = r.length;
-            myArray = new int[length];
-            for(int i=0; i<length; i++)
-            {
-                myArray[i] = r.myArray[i]; //copy array elements
+        if(r.length == 0){
+            //do nothing. Current list is already cleaned before this function is called
+        }else{
+            if(r.length > length){
+                //add place holders
+                addNodes(r.length - length);
+            }else if (r.length < length){
+                //remove extra nodes
+                removeNodes(length - r.length);
             }
+            //copy contents
+            ListNode *n1 = first;
+            ListNode *n2 = r.first;
+            for(int i=0; i<length; i++){
+                n1->value = n2->value;
+                n1 = n1->next;
+                n2 = n2->next;
+            }
+            //make current node pointing to first node
+            currentIndex = 0;
+            current = first;
         }
     }
 
-    int IntArray::size() const
-    {
+    int IntArray::size() const{
         //getter function to return the size of the array
         return length;
     }
 
-    int IntArray::operator[](int i)
-    {
-        //subscript overloading, return the reference of i th element
-        if(i < 0 || i >= length)
-        {
+    //subscript overloading, return the reference of i th element
+    int& IntArray::operator[](int i){
+        if(i < 0 || i >= length){
             //out of range
             std::cout << "the index is out of range";
+        }else{
+            //make variable current point to the i th node
+            //it is the highly possible that users move forward so we check if i == currentIndex + 1 first
+            if(i == currentIndex + 1){
+                current = current->next;
+                currentIndex++;
+            }else if(i == currentIndex - 1){ //moving backward
+            current = current->previous;
+            currentIndex--;
+            }else{
+                //find the closed node of first, current and last, the move from the closest
+                if(abs(i-0) < abs(i-currentIndex)){
+                    //first node is closer to i than current node
+                    current = first;
+                    currentIndex = 0;
+                }else if(abs(i-length+1) < abs(i-currentIndex)){
+                    //last node is closer
+                    current = last;
+                    currentIndex = length - 1;
+                }
+                //move to
+                if(i >= currentIndex){
+                    //move forward
+                    while(currentIndex != i){
+                        currentIndex++;
+                        current = current->next;
+                    }
+                }else{
+                    //move backward
+                    while(currentIndex != i){
+                        currentIndex--;
+                        current = current->previous;
+                    }
+                }
+            }
         }
-        return myArray[i];
+        return current->value;
     }
-    IntArray IntArray::operator+(const IntArray& r) const
-    {
-        //overloading operator + to merge two IntArrays
+
+    //overloading operator + to merge two IntArrays
+    IntArray IntArray::operator+(const IntArray& r) const{
         //create an instance.
         IntArray merged(length + r.length);
 
         //copy content from this object first
-        for(int i=0; i<r.length; i++)
-        {
-            merged.myArray[i] = myArray[i];
+        ListNode *p1 = merged.first;
+        ListNode *p2 = first;
+        for(int i=0; i<length; i++){
+            p1->value = p2->value;
+            p1 = p1->next;
+            p2 = p2->next;
         }
         //copy content from r
-        for(int i=0; i<r.length; i++)
-        {
-            merged.myArray[length + i] = r.myArray[i];
+        //p1 is at the right position, no change
+        p2 = r.first;
+        for(int i=0; i<r.length; i++){
+            p1->value = p2->value;
+            p1 = p1->next;
+            p2 = p2->next;
         }
         return merged;
     }
@@ -119,85 +161,85 @@ namespace ComputerScience
         //overloading operator + to merge IntArrays and an int
         IntArray merged(length + 1); // create an array one element more than this array
         //copy content from this object first
-        for(int i=0; i<length; i++)
-        {
-            merged.myArray[i] = myArray[i];
+        ListNode *p1 = merged.first;
+        ListNode *p2 = first;
+        for(int i=0; i<length; i++){
+            p1->value = p2->value;
+            p1 = p1->next;
+            p2 = p2->next;
         }
-        //copy content from r
-        for(int i=0; i<length; i++)
-        {
-            merged.myArray[length + i] = myArray[i];
-        }
+        //put val to the last node
+        //p1 is at last node now
+        p1->value = val;
         return merged;
     }
-    IntArray& IntArray::operator+=(const IntArray& r)
-    {
+    IntArray& IntArray::operator+=(const IntArray& r){
         //overloading operator += to append r to this array
         if(r.length == 0)
         {
             //appended array is empty, return the reference of this object directly
             return *this;
         }
-        // following code works for both a += a; and a += b;
-        // create a new combined array to hold merged arrays
-        int newlength = length + r.length;
-        int *tmpArray = new int[newlength];
-        //copy contents from this object into tmpArray
-        for(int i=0; i<r.length; i++)
-        {
-            tmpArray[i] = myArray[i];
-        }
-        //copy content from r
-        for(int i=0; i<r.length; i++)
-        {
-            tmpArray[length + i] = r.myArray[i];
+        //following code works for both a += a; and a += b;
+        //remember the last node before appending since last is going to be changed
+        ListNode *p1 = last;
+        //record r.length since it will be changed after addNodes if doing a += a
+        int rLength = r.length;
+
+        addNodes(r.length); //pointer last and member length of this object is changed within addNodes()
+
+        //copying value
+        p1 = p1->next; //let p1 starts from the first newly added node
+        ListNode *p2 = r.first;
+        for(int i=0; i<rLength; i++){
+            p1->value = p2->value;
+            p1 = p1->next;
+            p2 = p2->next;
         }
 
-        //free current array of this object
-        freeMemory();
-        //swap tmpArray to myArray
-        myArray = tmpArray;
-        length = newlength;
         return *this;
     }
     IntArray& IntArray::operator+=(int val)
     {
         //overloading operator += to append an int to this array
-        //create a new array one element larger
-        int newlength = length + 1;
-        int *tmpArray = new int[newlength];
-        //copy contents from this object into tmpArray
-        for(int i=0; i<length; i++)
-        {
-            tmpArray[i] = myArray[i];
-        }
-
-
-        //put val to the last element of tmpArray
-        tmpArray[length] = val;
-
-        //free current array of this object
-        freeMemory();
-        //swap tmpArray to  myArray
-        myArray = tmpArray;
-        length = newlength;
+        addNodes(1);
+        last->value = val;
         return *this;
+    }
+    void IntArray::Resize(int newSize)
+    {
+        //Resize the array to the length of newSize. It preserves the existing values
+        if(newSize <= 0)
+            std::cout << "array size must be a positive number";
+
+        if(newSize > length)
+        {
+            addNodes(newSize - length);
+        }
+        else
+        {
+            removeNodes(length - newSize);
+        }
     }
     std::ostream& operator<<(std::ostream & out, const IntArray & r)
     {
         //friend function to overload operator << for output
+        IntArray::ListNode *p = r.first;
         for(int i=0; i<r.length; i++)
         {
-            out << r.myArray[i] << ' ';
+            out << p->value << ' ';
+            p = p->next;
         }
         return out;
     }
     std::istream& operator >> (std::istream & in, IntArray& r)
     {
         //friend function to overload operator >> for input
+        IntArray::ListNode *p = r.first;
         for(int i=0; i<r.length; i++)
         {
-            in >> r.myArray[i];
+            in >> p->value;
+            p = p->next;
         }
         return in;
     }
@@ -206,11 +248,15 @@ namespace ComputerScience
         //commutative + of IntArray operator+(int)
         IntArray merged(r.length +1); //create an array one element more than this array
         //put val to the first element
-        merged.myArray[0] = val;
+        IntArray::ListNode *p1 = merged.first;
+        p1->value = val;
+        p1 = p1->next; //position at the second node
+        IntArray::ListNode *p2 = r.first;
         //copy content from this object
-        for(int i=0; i<r.length; i++)
-        {
-            merged.myArray[1 + i] = r.myArray[i];
+        for(int i=0; i<r.length; i++){
+            p1->value = p2->value;
+            p1 = p1->next;
+            p2 = p2->next;
         }
         return merged;
     }

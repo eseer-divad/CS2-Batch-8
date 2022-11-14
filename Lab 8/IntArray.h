@@ -49,7 +49,7 @@ namespace ComputerScience
  		IntArray (const IntArray &r); //copy constructor to initiate the instance from existing instance
 		~IntArray(); //destructor. Allocated array must be deleted in this function
 		int size() const; //getter function to return the size of the array
-	 	int operator[] (int i); //subscript operator overloading. The return value must be the reference of the element of the arra
+	 	int& operator[] (int i); //subscript operator overloading. The return value must be the reference of the element of the arra
 		IntArray operator+(const IntArray& r) const; //overloading operator + to merge two IntArrays
 		IntArray operator+ (int) const; //overloading operator + to add an int element at the end of the array
 		IntArray& operator+= (const IntArray& r); //overloading operator += to append an array
