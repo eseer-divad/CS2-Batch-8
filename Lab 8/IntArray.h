@@ -7,7 +7,18 @@ namespace ComputerScience
 	{
 	private:
 		int length; //hold the array size
-		int * myArray; //a pointer pointing to a dynamically allocated array.
+		struct ListNode
+		{
+		    int value;  //hold the value
+		    ListNode *previous, *next;
+		    //previous: pointing to the previous node
+		    //next: pointing to the next node
+		};
+		ListNode *first; //hold the address of first node
+		ListNode *last; //hold the address of last node
+		ListNode *current; //hold the address of current node. Think as a cursor
+		int currentIndex; //the array index value of the node that current points to
+		//implementation code must maintain the consistency of currentIndex and current
 	public:
 	    class iterator {
         private:

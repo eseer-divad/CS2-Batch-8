@@ -1,0 +1,21 @@
+1. Done
+
+2. The iterator is only used when called like this, dereferencing it would
+cause an error as it is NOT a pointer.
+
+3. 
+
+// dereference
+
+structName operator*() {  };
+
+//multiply       
+
+structName operator *(const structName&) {  };
+
+4. I do not completely understand this question. I believe there might be 
+an issue with using "+ 1" on an iterator as once again, it is different from
+a pointer. Throughout the code I notice there is mainly use of increments. 
+
+5. I believe the program will crash because I would be trying to access
+	a null member variable.

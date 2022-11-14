@@ -4,44 +4,41 @@ namespace ComputerScience
 {
     IntArray::IntArray(int size)
     {
-        //constructor
+        //initialize
+        length = 0;
+        first = last = current = nullptr;
+        currentIndex = -1;
+
         if(size < 0)
         {
-            //not allowed
-            length = 0;
-            myArray = nullptr;
             std::cout << "size of the array must be greater than 0";
         }
         else if (size == 0)
         {
-            length = 0;
-            myArray = nullptr;
+            //do nothing because already initialize
         }
         else
         {
-            length = size;
-            myArray = new int[size];
+            addNodes(size); //add place holders
+            //make current pointing to first node
+            currentIndex = 0;
+            current = first;
         }
     }
 
+    //destructor
     IntArray::~IntArray()
     {
-        //myArray always holds a memory, so safe to free
-        freeMemory();
+        removeNodes(length);
     }
-    void IntArray::freeMemory()
-    {
-        //free the allocated memory for myArray
-        if(myArray != nullptr)
-        {
-            delete [] myArray;
-            myArray = nullptr;
-            length = 0;
-        }
-    }
-    IntArray::IntArray(const IntArray & r)
-    {
-        //copy constructor to initiate the instance from existing instance
+
+    //copy constructor to initiate the instance from existing instance
+    IntArray::IntArray(const IntArray & r){
+        //initialize
+        length = 0;
+        first = last = current = nullptr;
+        currentIndex = -1;
+
         copyContent(r);
     }
 
@@ -54,10 +51,12 @@ namespace ComputerScience
             return *this;
         }
         //now the right side IntArray r is not the same object
-        freeMemory(); // clean current array
+        removeNodes(length); //clean the list
         copyContent(r); //copy all
-        return *this;
+        return *this; //return the reference of the object
     }
+
+    //copy the content from another object. Internal use
     void IntArray::copyContent(const IntArray& r)
     {
         //copy the content from another object
