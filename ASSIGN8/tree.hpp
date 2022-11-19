@@ -1,10 +1,6 @@
 /*
-   COPYRIGHT (C) 2017 Student Name (UANET ID ) All rights reserved.
-   CS assignment
-   Author.  Student Name
-            zippy@zips.uakron.edu
-   Version. 1.01 09.09.2017
-   Purpose: This program ...
+   COPYRIGHT (C) 1923 David Reese (dcr54@uakron.edu ) All rights reserved.
+   Version. 1.01 09.09.1923
 */
 #ifndef TREE_HPP
 #define TREE_HPP
@@ -114,7 +110,7 @@ private:
    }
 
    // do a binary search on the Tree
-   TreeNode<NODETYPE>* binarySearchHelper(TreeNode<NODETYPE>* ptr, NODETYPE data) {
+   TreeNode<NODETYPE>* binarySearchHelper(TreeNode<NODETYPE>* ptr, NODETYPE data) const {
 
     // Base Cases: root is null or data is present at root
     if (ptr == NULL || ptr->data == data)
@@ -122,10 +118,10 @@ private:
 
     // Key is greater than root's data
     if (ptr->data < data)
-       return search(ptr->right, data);
+       return binarySearchHelper(ptr->rightPtr, data);
 
     // Key is smaller than root's data
-    return search(ptr->left, data);
+    return binarySearchHelper(ptr->leftPtr, data);
    }
 
 };
