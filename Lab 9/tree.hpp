@@ -178,7 +178,14 @@ private:
     //to the tree
     void InsertFromTheSortedArray(NODETYPE arr[], int startIndex, int endIndex)
     {
+        // base case
+        if(startIndex > endIndex)
+            return;
 
+        int middleElement = (startIndex + endIndex) / 2;
+        rootPtr->data = arr[middleElement];
+        InsertFromTheSortedArray(arr[startIndex], startIndex, middleElement-1);
+        InsertFromTheSortedArray(arr[middleElement+1], middleElement+1, endIndex);
     }
 };
 
