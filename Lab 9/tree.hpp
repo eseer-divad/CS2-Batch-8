@@ -50,7 +50,12 @@ public:
 
    void Optimize()
    {
-
+        int length = Count();
+        int index = 0;
+        NODETYPE arr[length];
+        PopulateArrayInOrder(rootPtr, index, arr);
+        deleteSubTree(rootPtr);
+        InsertFromTheSortedArray(arr, 0, length);
    }
 
 private:
@@ -116,7 +121,6 @@ private:
         return (left_depth+1);
     else
         return (right_depth+1);
-
    }
 
    // do a binary search on the Tree
@@ -160,6 +164,19 @@ private:
     //              arr is the array to hold values of all nodes
     //postcondition: when finished, arr holds values of all nodes in sorted order
     void PopulateArrayInOrder(TreeNode<NODETYPE> * subTreeRootPtr, int &index, NODETYPE arr[]) const
+    {
+        if (subTreeRootPtr != nullptr) {
+         PopulateArrayInOrder(subTreeRootPtr->leftPtr, index, arr); // traverse left subtree
+         index++;
+         arr[index] = subTreeRootPtr->data; // process node
+         PopulateArrayInOrder(subTreeRootPtr->rightPtr, index, arr); // traverse right subtree
+      }
+    }
+    //insert values from array arr to the tree. The insertion order is the value of the middle position,
+    //left sub tree and then right right sub tree
+    //startIndex and endIndex is the range of position that values are taken from the array to insert
+    //to the tree
+    void InsertFromTheSortedArray(NODETYPE arr[], int startIndex, int endIndex)
     {
 
     }
