@@ -107,14 +107,16 @@ private:
 
     if (parentPtr == NULL)
         return 0;
-    else {
-        // Find the height of left, right subtrees
-        int left_depth = determineDepth(parentPtr->leftPtr);
-        int right_depth = determineDepth(parentPtr->rightPtr);
-        // Display max depth.
-        std::cout << "Depth: " + (std::max(left_depth, right_depth) + 1);
-        return 0;
-      }
+
+    // Find the height of left, right subtrees
+    int left_depth = determineDepth(parentPtr->leftPtr);
+    int right_depth = determineDepth(parentPtr->rightPtr);
+
+    if (left_depth > right_depth)
+        return (left_depth+1);
+    else
+        return (right_depth+1);
+
    }
 
    // do a binary search on the Tree
