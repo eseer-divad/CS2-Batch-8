@@ -1,0 +1,27 @@
+# depslib dependency file v1.0
+1668074470 source:c:\users\davidreese\onedrive - the university of akron\documents\github\cs2-batch-8\assign8\tree_main.cpp
+	<iostream>
+	<cstdlib>
+	<ctime>
+	"Tree.hpp"
+
+1668882034 c:\users\davidreese\onedrive - the university of akron\documents\github\cs2-batch-8\assign8\tree.hpp
+	<iostream>
+	<algorithm>
+	"Treenode.hpp"
+
+1668074471 c:\users\davidreese\onedrive - the university of akron\documents\github\cs2-batch-8\assign8\treenode.hpp
+
+1668914720 source:c:\users\davidreese\onedrive - the university of akron\documents\github\cs2-batch-8\lab 9\tree_main.cpp
+	<iostream>
+	<cstdlib>
+	<ctime>
+	"Tree.hpp"
+
+1668915880 c:\users\davidreese\onedrive - the university of akron\documents\github\cs2-batch-8\lab 9\tree.hpp
+	<iostream>
+	<algorithm>
+	"Treenode.hpp"
+
+1668074471 c:\users\davidreese\onedrive - the university of akron\documents\github\cs2-batch-8\lab 9\treenode.hpp
+
