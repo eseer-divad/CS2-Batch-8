@@ -6,7 +6,7 @@
 #define TREE_HPP
 #include <iostream>
 #include <algorithm>
-#include "Treenode.hpp"
+#include "treenode.hpp"
 
 // Tree class-template definition
 template<typename NODETYPE> class Tree {
@@ -55,7 +55,8 @@ public:
         NODETYPE arr[length];
         PopulateArrayInOrder(rootPtr, index, arr);
         deleteSubTree(rootPtr);
-        InsertFromTheSortedArray(arr, 0, length);
+        index = 0;
+        InsertFromTheSortedArray(arr, index, length);
    }
 
 private:
@@ -176,13 +177,13 @@ private:
     //left sub tree and then right right sub tree
     //startIndex and endIndex is the range of position that values are taken from the array to insert
     //to the tree
-    void InsertFromTheSortedArray(NODETYPE arr[], int startIndex, int endIndex)
+    void InsertFromTheSortedArray(NODETYPE arr[], int *startIndex, int *endIndex)
     {
         // base case
         if(startIndex > endIndex)
             return;
 
-        int middleElement = (startIndex + endIndex) / 2;
+        int middleElement = (static_cast<int>(startIndex) + static_cast<int>(endIndex)) / 2;
         rootPtr->data = arr[middleElement];
         InsertFromTheSortedArray(arr[startIndex], startIndex, middleElement-1);
         InsertFromTheSortedArray(arr[middleElement+1], middleElement+1, endIndex);

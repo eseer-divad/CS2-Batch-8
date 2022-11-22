@@ -2,7 +2,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
-#include "Tree.hpp"
+#include "tree.hpp"
 
 int main() {
     int num = 14;

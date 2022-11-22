@@ -1,6 +1,6 @@
 /*
-   COPYRIGHT (C) 1923 David Reese (dcr54@uakron.edu ) All rights reserved.
-   Version. 1.01 09.09.1923
+   COPYRIGHT (C) 2022 David Reese (dcr54@uakron.edu) All rights reserved.
+   Version. 1.01 11.17.2022
 */
 #ifndef TREE_HPP
 #define TREE_HPP
@@ -96,19 +96,17 @@ private:
 
    // calculate the depth of the tree
    int determineDepth(TreeNode<NODETYPE>* parentPtr) const {
-
+	//base case
     if (parentPtr == NULL)
         return 0;
-
-    // Find the height of left, right subtrees
+	//recursive
     int left_depth = determineDepth(parentPtr->leftPtr);
     int right_depth = determineDepth(parentPtr->rightPtr);
-
-    if (left_depth > right_depth)
+	//lowest depth
+    if (left_depth > rdepth)
         return (left_depth+1);
     else
         return (right_depth+1);
-
    }
 
    // do a binary search on the Tree
