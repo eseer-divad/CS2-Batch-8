@@ -14,14 +14,19 @@ void chew_system_stack();
  * Recursive version of fibonacci
  */
 int fibrecurse(int n) {
-
+    if(n<=1)
+    return n;
+    return fibrecurse(n-1) + fibrecurse(n-2);
 }
 
 /*
  * Iterative (loop) version of fibonacci
  */
 int fibiterate(int n) {
-
+    while(n >= 1)
+    {
+        &n 
+    }
 }
 
 /*
