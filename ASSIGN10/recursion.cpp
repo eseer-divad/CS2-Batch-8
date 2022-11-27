@@ -29,7 +29,34 @@ int fibiterate(int n) {
  */
 template <class T>
 void quicksort(T ar[], int first, int last) {
+    if(first < last)
+    {
+        // partitioning stage
+        int k = ar[last];
+        int i = first - 1;
+        int temp;
 
+        for (int j=first; j<=(last-1); j++)
+        {
+           if(ar[j] <= x)
+           {
+            i++;
+            //swap array values
+            temp = ar[i];
+            ar[i] = ar[j];
+            ar[j] = temp;
+           }
+        }
+        //swap array values
+        temp = ar[i+1];
+        ar[i+1] = ar[last];
+        ar[last] = temp; 
+        i++;
+        
+        //revursive call
+        quicksort(arr, first, i-1);
+        quicksort(arr, i+1, last);
+    }
 }
 
 int main() {
