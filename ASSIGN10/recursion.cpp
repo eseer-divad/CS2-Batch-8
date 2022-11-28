@@ -23,9 +23,24 @@ int fibrecurse(int n) {
  * Iterative (loop) version of fibonacci
  */
 int fibiterate(int n) {
+    int result;
     while(n >= 1)
     {
-        &n 
+        // Special cases
+        if (n==0)
+            return 1;
+        else if(n==1)
+            return n;
+        // Iterative Loop
+        else if (n < 0)
+            return -1;
+        else
+        {
+            result = 1;
+            for(int j=1; j<=n; j++) 
+                result *= j;
+            return result;
+        }
     }
 }
 
@@ -43,7 +58,7 @@ void quicksort(T ar[], int first, int last) {
 
         for (int j=first; j<=(last-1); j++)
         {
-           if(ar[j] <= x)
+           if(ar[j] <= ar[i])
            {
             i++;
             //swap array values
@@ -59,8 +74,8 @@ void quicksort(T ar[], int first, int last) {
         i++;
         
         //revursive call
-        quicksort(arr, first, i-1);
-        quicksort(arr, i+1, last);
+        quicksort(ar, first, i-1);
+        quicksort(ar, i+1, last);
     }
 }
 
